@@ -25,6 +25,19 @@ This is an independently runnable **mock-only development workbench**, not the f
 
 Local runtime observed during final testing: Node.js 26.7.0 on macOS arm64. CI is configured for Node.js 24 on macOS and Ubuntu; its actual results must be checked separately. Tests make no live model calls.
 
+## GitHub and package verification
+
+[CI run 36139602302](https://github.com/michaelmeicp/runharbor/actions/runs/36139602302) completed successfully for implementation commit `e219a8c`:
+
+- Node 24 unit/integration tests on Ubuntu: passed.
+- Node 24 unit/integration tests on macOS: passed.
+- Chromium browser workflow on Ubuntu: passed.
+- Gitleaks commit-history scan: passed.
+
+A fresh-directory installation from the npm tarball also passed setup, authenticated demo creation, and production of two mock artifacts. This is a package smoke test, not proof of the specification's clean-machine five-minute installation target.
+
+The GitHub repository is private pending the public-preview decision. The branch-protection API returned HTTP 403: GitHub requires an eligible paid plan or public visibility for this repository. No account plan or billing setting was changed. Signed public distribution, private-reporting readiness, and branch protection remain release-gate items.
+
 ## Material gaps
 
 The one-week M0 comparison has not been performed. Claude CLI is not installed locally. Real-agent execution, verified live quota/failback, safe git workspaces and merges, full sandbox/credential isolation, encrypted export/backups, complete deletion, RRULE, complete localization and signed distribution are unfinished.
