@@ -2,13 +2,13 @@
 
 The goal is to earn attention through a useful, credible workflow. Star growth is an outcome to observe, not a promise or a reason to inflate functionality.
 
-## Before a public preview
+## Public preview launch
 
-- Confirm permission to publish the narrower mock-only development preview despite the original first-release gate.
+- The product owner authorized the narrower mock-only preview after reviewing the original release-gate exception.
 - Keep the status limitation visible before installation instructions.
 - Use real screenshots and a reproducible zero-key demo.
 - Verify clean installs and CI. Enable private vulnerability reporting and appropriate repository protections where the account plan allows.
-- Configure a real private security/conduct contact. Do not invent an email address or support commitment.
+- Use GitHub private vulnerability reporting for security disclosures. A separate private conduct contact and backup security email remain to be configured; do not invent either.
 
 ## Repository positioning
 
