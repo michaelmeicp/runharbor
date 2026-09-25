@@ -1,0 +1,19 @@
+name: Workflow request
+description: Describe the agent workflow you want to make easier.
+body:
+  - type: textarea
+    id: workflow
+    attributes:
+      label: What work are you trying to repeat or manage?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What would a successful outcome look like?
+    validations:
+      required: true
+  - type: input
+    id: requirement
+    attributes:
+      label: Related requirement ID, if known
