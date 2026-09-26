@@ -4,7 +4,9 @@
 
 - P0.1: added job-scoped `contents: read` and `pull-requests: read` for Gitleaks; the observed PR failure was HTTP 403 while listing PR commits. Verification is tracked on PR #4.
 - P0.2–3: rerun PR #4, then review and validate the three Actions major upgrades individually before merging.
-- P1–P5: queued in the product owner's priority order; full v1 remains blocked.
+- P1.4–7: naming, stack, physical schema, directory layout and alpha milestone exception recorded in [spec amendments](spec-amendments.md); ordered transactional DB migrations and rollback/legacy tests added.
+- P2.8–9: Codex cwd/output schema and explicit Claude T0/T1 denials added and unit tested; installed Claude verification is still open.
+- P3–P5: live/platform evidence and remaining features are open; full v1 remains blocked.
 
 ## Requirement matrix
 
