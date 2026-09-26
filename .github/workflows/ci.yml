@@ -50,6 +50,9 @@ jobs:
           path: docs/images/
           retention-days: 7
   secrets:
+    permissions:
+      contents: read
+      pull-requests: read
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:

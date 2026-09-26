@@ -1,5 +1,13 @@
 # Implementation status
 
+## Prioritized follow-up (2026-09-26)
+
+- P0.1: added job-scoped `contents: read` and `pull-requests: read` for Gitleaks; the observed PR failure was HTTP 403 while listing PR commits. Verification is tracked on PR #4.
+- P0.2–3: rerun PR #4, then review and validate the three Actions major upgrades individually before merging.
+- P1–P5: queued in the product owner's priority order; full v1 remains blocked.
+
+## Requirement matrix
+
 This matrix preserves the supplied v2.0 requirement IDs without publishing the original private product brief. **No requirement is declared fully accepted by this development pass.** A partial implementation may satisfy individual acceptance cases while leaving other cases open.
 
 - **Partial / mock:** code or a deterministic test exists, but complete v1 acceptance is not established.
