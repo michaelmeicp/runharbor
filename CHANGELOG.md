@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0-alpha.1 — unreleased development preview
+## 0.1.0-alpha.1 — mock-only public preview
 
 - Local password-protected workbench with projects, tasks, runs, and permanent outputs.
 - Exception inbox with input continuation, severity, deduplication, snooze and undo.
@@ -11,4 +11,4 @@
 - SQLite search, event history, audit-chain verification, CLI doctor.
 - English-first responsive UI, partial Traditional Chinese navigation, documentation and tests.
 
-Live agents and the complete v1 requirements are not implemented. See the implementation matrix and release gate. No public production release, npm package, or container image is claimed.
+Live agents and the complete v1 requirements are not implemented. See the implementation matrix and release gate. This is a GitHub prerelease. No production v1 release, npm-registry publication, or container image is claimed.

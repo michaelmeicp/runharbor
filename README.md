@@ -3,6 +3,7 @@
 <h1 align="center">RunHarbor</h1>
 <p align="center"><strong>Scheduled agents. Organized results. An inbox for what needs you.</strong></p>
 <p align="center">A local workbench for recurring agent work — without another wall of chats.</p>
+<p align="center"><a href="https://github.com/michaelmeicp/runharbor/actions/workflows/ci.yml"><img src="https://github.com/michaelmeicp/runharbor/actions/workflows/ci.yml/badge.svg" alt="CI status"></a></p>
 <p align="center"><a href="README.zh-Hant.md">繁體中文</a> · <a href="#try-it-locally">Quick start</a> · <a href="docs/implementation-status.md">Implementation status</a> · <a href="CONTRIBUTING.md">Contribute</a></p>
 
 > **Safety and status:** This is a **mock-only development preview**, not the v1 product or a production agent runner. It binds to `127.0.0.1`, requires a password, and does not launch Codex or Claude, read provider credentials, or call a model. The [v1 security release gate](docs/release-gate.md) remains open. RunHarbor is independent of all model vendors; it does not provide, resell, or broker model access. Live subscription automation requires reviewing the provider's current terms before use.
@@ -46,7 +47,7 @@ node src/cli.js stop-all
 
 Use the same data directory for `stop-all` as the running service. After a hard crash, verify the old process is gone before removing a stale `service.lock`.
 
-**No npm package or container image has been published.** Do not assume an unscoped `npx runharbor` package belongs to this project. The source checkout above is the current install path.
+**No npm-registry package or container image has been published.** A downloadable npm-format archive and SHA-256 checksums are available in the [GitHub prerelease](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.1). Do not assume an unscoped `npx runharbor` package belongs to this project. The source checkout above is the current install path.
 
 ## What you can use today
 

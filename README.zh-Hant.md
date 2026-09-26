@@ -40,7 +40,7 @@ node src/cli.js doctor
 node src/cli.js stop-all
 ```
 
-急停指令必須使用與服務相同的資料目錄。目前**未發佈 npm 套件或容器映像**，請用上述原始碼安裝方式；不要把其他同名套件當成本專案。
+急停指令必須使用與服務相同的資料目錄。目前**未發佈 npm registry 套件或容器映像**；[GitHub 預覽版本](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.1)提供可下載套件與 SHA-256 校驗檔，請用上述原始碼安裝方式；不要把其他同名套件當成本專案。
 
 ## 已可體驗
 

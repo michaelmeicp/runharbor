@@ -229,4 +229,4 @@ The original scope has 147 functional requirements and 67 security requirements.
 
 The current executable slice is the local mock workbench. It does not replace the requested v1 product. In particular, G4 (live Codex/Claude), G7 (signed installable public distribution), G8 (verified live quota), G9 (complete live switching/failback), and G10 (full sandbox baseline) remain unfulfilled.
 
-A private source repository can preserve this development outcome without implying public release. A public mock-only preview needs an explicit scope exception to the supplied first-release gate.
+The product owner authorized public publication of the mock-only preview after reviewing its limitations. This scope exception does not change the outstanding v1 acceptance criteria.
