@@ -3,10 +3,11 @@
 ## Prioritized follow-up (2026-09-26)
 
 - P0.1: added job-scoped `contents: read` and `pull-requests: read` for Gitleaks; the observed PR failure was HTTP 403 while listing PR commits. Verification is tracked on PR #4.
-- P0.2–3: rerun PR #4, then review and validate the three Actions major upgrades individually before merging.
+- P0.2–3: PRs #4, #1, #2, #3 were individually reviewed, passed all four checks, and merged. The final [PR #3 run](https://github.com/michaelmeicp/runharbor/actions/runs/36217847210) has no Node 20 deprecation warning; see [Actions compatibility](actions-compatibility.md).
 - P1.4–7: naming, stack, physical schema, directory layout and alpha milestone exception recorded in [spec amendments](spec-amendments.md); ordered transactional DB migrations and rollback/legacy tests added.
-- P2.8–9: Codex cwd/output schema and explicit Claude T0/T1 denials added and unit tested; installed Claude verification is still open.
-- P3–P5: live/platform evidence and remaining features are open; full v1 remains blocked.
+- P2.8–9: Codex cwd/output schema and explicit Claude T0/T1 denials added and unit tested. Claude uses the specified `user` source plus generated settings; installed-version tests remain open.
+- P3.10–14: macOS synthetic canaries prove the built-in Codex profiles allow outside-workspace reads. Live execution remains blocked. See [M0 evidence](m0-validation.md).
+- P3.15–P5.26: see the [prioritized backlog](prioritized-backlog.md); full v1 remains blocked.
 
 ## Requirement matrix
 
