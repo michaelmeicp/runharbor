@@ -1,5 +1,13 @@
 # Implementation status
 
+## Prioritized follow-up (2026-09-26)
+
+- P0.1: added job-scoped `contents: read` and `pull-requests: read` for Gitleaks; the observed PR failure was HTTP 403 while listing PR commits. Verification is tracked on PR #4.
+- P0.2–3: rerun PR #4, then review and validate the three Actions major upgrades individually before merging.
+- P1–P5: queued in the product owner's priority order; full v1 remains blocked.
+
+## Requirement matrix
+
 This matrix preserves the supplied v2.0 requirement IDs without publishing the original private product brief. **No requirement is declared fully accepted by this development pass.** A partial implementation may satisfy individual acceptance cases while leaving other cases open.
 
 - **Partial / mock:** code or a deterministic test exists, but complete v1 acceptance is not established.
@@ -229,4 +237,4 @@ The original scope has 147 functional requirements and 67 security requirements.
 
 The current executable slice is the local mock workbench. It does not replace the requested v1 product. In particular, G4 (live Codex/Claude), G7 (signed installable public distribution), G8 (verified live quota), G9 (complete live switching/failback), and G10 (full sandbox baseline) remain unfulfilled.
 
-A private source repository can preserve this development outcome without implying public release. A public mock-only preview needs an explicit scope exception to the supplied first-release gate.
+The product owner authorized public publication of the mock-only preview after reviewing its limitations. This scope exception does not change the outstanding v1 acceptance criteria.

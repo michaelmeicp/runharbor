@@ -2,7 +2,7 @@
 
 **BLOCKED. Do not publish v1.0 or describe this development build as satisfying the complete requirements.**
 
-The supplied specification requires all 19 baseline items before v1 release, explicitly including the first open-source launch. This checklist records gaps rather than waiving them. Publishing a narrower mock-only development preview is a separate product-owner decision.
+The supplied specification requires all 19 baseline items before v1 release, explicitly including the first open-source launch. This checklist records gaps rather than waiving them. The product owner subsequently authorized testing and publishing the explicitly labeled mock-only preview. That exception permits `0.1.0-alpha.1` to be public; it does not waive the v1.0 gates or enable live agents.
 
 | #   | Baseline                                       | Current evidence / remaining work                                                                                            |
 | --- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
