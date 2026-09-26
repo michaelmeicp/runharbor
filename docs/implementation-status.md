@@ -4,7 +4,7 @@
 
 - P0.1: added job-scoped `contents: read` and `pull-requests: read` for Gitleaks; the observed PR failure was HTTP 403 while listing PR commits. Verification is tracked on PR #4.
 - P0.2: PR #4 passed all four checks ([run 36207096864](https://github.com/michaelmeicp/runharbor/actions/runs/36207096864)) and was merged.
-- P0.3: PR #1 and #2 reviewed, all checks passed, merged; PR #3 validation in progress; see [Actions compatibility](actions-compatibility.md).
+- P0.3: PR #1 and #2 reviewed, all checks passed, merged; PR #3 checkout upgrade passed; final checksum-pinned Gitleaks CLI validation in progress to remove the remaining Node 20 wrapper; see [Actions compatibility](actions-compatibility.md).
 - P1–P5: queued in the product owner's priority order; full v1 remains blocked.
 
 ## Requirement matrix
