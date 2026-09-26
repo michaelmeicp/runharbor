@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["summary", "content", "notable", "needs_input"],
+  "properties": {
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["did", "result", "next"],
+      "properties": {
+        "did": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "result": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "next": {
+          "type": "string",
+          "maxLength": 80
+        }
+      }
+    },
+    "content": {
+      "type": "string"
+    },
+    "notable": {
+      "type": "boolean"
+    },
+    "needs_input": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["question", "options"],
+          "properties": {
+            "question": {
+              "type": "string",
+              "maxLength": 1000
+            },
+            "options": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "string",
+                "maxLength": 200
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
