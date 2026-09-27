@@ -217,6 +217,7 @@ export function selectProfile({
   quotas,
   clock = Date.now(),
   switches = 0,
+  runtime = {},
 }) {
   const blocked = quotaBlocked(
     quotas[source.id],
@@ -266,8 +267,10 @@ export function selectProfile({
     )
       continue;
     // Inherit the source policy. Target profile settings cannot widen it.
+    // Runtime paths come only from the trusted caller, never run/profile metadata.
+    // The mock-only engine supplies none; live callers must supply verified paths.
     try {
-      const argv = tierToArgs(target.agent_id, run, target.params);
+      const argv = tierToArgs(target.agent_id, run, target.params, runtime);
       return { profile: target, switched: true, argv, argv_hash: sha(argv) };
     } catch {
       continue;

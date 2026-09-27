@@ -9,6 +9,11 @@
 - P3.10–14: macOS synthetic canaries prove the built-in Codex profiles allow outside-workspace reads. Live execution remains blocked. See [M0 evidence](m0-validation.md).
 - P3.15–P5.26: see the [prioritized backlog](prioritized-backlog.md); full v1 remains blocked.
 
+## PR #5 review follow-up (2026-09-27)
+
+- Fixed Codex fallback selection to forward caller-supplied runtime cwd/schema to `tierToArgs`. Regression tests cover valid selection, unchanged source permissions, default schema, invalid/missing paths, and sandbox/provider rejection. Run metadata cannot supply trusted paths.
+- The mock engine still supplies no live runtime; real adapter execution and the v1 gate remain blocked.
+
 ## Requirement matrix
 
 This matrix preserves the supplied v2.0 requirement IDs without publishing the original private product brief. **No requirement is declared fully accepted by this development pass.** A partial implementation may satisfy individual acceptance cases while leaving other cases open.

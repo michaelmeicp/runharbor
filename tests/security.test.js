@@ -197,6 +197,92 @@ test("failover preserves source permissions and rejects unapproved providers, pa
   assert.equal(selection({ run: { tier: 2, pin_agent: true } }).profile, null);
   assert.equal(selection({ switches: 3 }).storm, true);
 });
+const codexSelection = (overrides = {}) =>
+  selection({
+    candidates: [
+      {
+        ...target,
+        agent_id: "codex",
+        provider: "openai",
+        auth_mode: "subscription",
+      },
+    ],
+    project: { allowed_providers: ["openai:subscription"] },
+    ...overrides,
+  });
+test("Codex fallback forwards trusted runtime cwd/schema and preserves the source tier", () => {
+  const runtime = {
+    worktree: "/tmp/trusted workspace $literal",
+    outputSchema: "/tmp/trusted schema.json",
+  };
+  const result = codexSelection({
+    runtime,
+    run: {
+      tier: 0,
+      capabilities: [],
+      network_allowlist: [],
+      workspace_mode: "artifact_only",
+    },
+  });
+  assert.equal(result.profile?.id, target.id);
+  assert.equal(result.switched, true);
+  assert.equal(result.argv[result.argv.indexOf("-C") + 1], runtime.worktree);
+  assert.equal(
+    result.argv[result.argv.indexOf("--output-schema") + 1],
+    runtime.outputSchema,
+  );
+  assert.equal(result.argv[result.argv.indexOf("--sandbox") + 1], "read-only");
+  assert.equal(result.argv_hash, sha(result.argv));
+  const defaults = codexSelection({ runtime: { worktree: runtime.worktree } });
+  assert(
+    defaults.argv[defaults.argv.indexOf("--output-schema") + 1].endsWith(
+      "/packages/adapter-sdk/output.schema.json",
+    ),
+  );
+});
+test("Codex fallback fails closed without valid runtime and cannot take paths from run metadata", () => {
+  for (const runtime of [
+    undefined,
+    {},
+    { worktree: "relative" },
+    { worktree: "/tmp/bad\0path" },
+    { worktree: "/tmp/trusted", outputSchema: "relative.json" },
+  ]) {
+    const result = codexSelection({
+      runtime,
+      run: {
+        tier: 0,
+        workspace_mode: "artifact_only",
+        workspace: "/tmp/untrusted",
+        worktree: "/tmp/untrusted",
+      },
+    });
+    assert.equal(result.profile, null);
+  }
+});
+test("trusted runtime cannot bypass sandbox verification or provider approval", () => {
+  const runtime = { worktree: "/tmp/trusted" };
+  assert.equal(
+    codexSelection({
+      runtime,
+      candidates: [
+        {
+          ...target,
+          agent_id: "codex",
+          provider: "openai",
+          auth_mode: "subscription",
+          sandbox_verified: false,
+        },
+      ],
+    }).profile,
+    null,
+  );
+  assert.equal(
+    codexSelection({ runtime, project: { allowed_providers: ["local:mock"] } })
+      .profile,
+    null,
+  );
+});
 test("unknown, estimated and anomalous quota signals cannot drive switching", () => {
   for (const q of [
     { used_pct: 100, status: "rejected", confidence: "unknown" },
