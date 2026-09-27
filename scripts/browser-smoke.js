@@ -5,6 +5,8 @@ import { join, resolve } from "node:path";
 import assert from "node:assert/strict";
 import { createApp } from "../src/server.js";
 
+// Keep generated demo data independent of the workstation timezone.
+process.env.TZ = "UTC";
 const dir = mkdtempSync(join(tmpdir(), "rh-browser-"));
 const app = await createApp({
   dataDir: dir,
@@ -16,6 +18,8 @@ const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({
   viewport: { width: 1440, height: 1080 },
   deviceScaleFactor: 1,
+  timezoneId: "UTC",
+  locale: "en-US",
 });
 const page = await context.newPage();
 const errors = [];
@@ -32,6 +36,7 @@ try {
   await page.getByRole("heading", { name: "Needs your attention" }).waitFor();
   await page.getByRole("button", { name: "Try the demo" }).click();
   await page.getByRole("button", { name: "Answer request" }).waitFor();
+  assert(app.store.all("schedules").every((s) => s.timezone === "UTC"));
   await page.screenshot({
     path: "docs/images/inbox-desktop.png",
     fullPage: true,
@@ -88,6 +93,7 @@ try {
     fullPage: true,
   });
   await page.getByRole("link", { name: "Usage", exact: true }).click();
+  await page.getByRole("heading", { name: "Usage", exact: true }).waitFor();
   await page.screenshot({
     path: "docs/images/usage-desktop.png",
     fullPage: true,

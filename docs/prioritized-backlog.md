@@ -1,13 +1,13 @@
 # Prioritized implementation backlog
 
-Updated 2026-09-26. Numbers match the product owner’s list. Implemented means code exists on the feature branch and needs PR review; it is not full v1 acceptance. Update this file and implementation-status.md whenever an item advances.
+Updated 2026-09-26. Numbers match the prioritized development checklist. Implemented means code exists on the feature branch and needs PR review; it is not full v1 acceptance. Update this file and implementation-status.md whenever an item advances.
 
 | #   | Status            | Evidence / next step                                                                                                    |
 | --- | ----------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | 1   | Done              | Job-scoped read permissions; PR #4 passed and merged.                                                                   |
 | 2   | Done              | Gitleaks SHA PR #4 passed and merged.                                                                                   |
 | 3   | Done              | PRs #1/#2/#3 individually reviewed and passed; all merged; no Node 20 warning in final #3 run.                          |
-| 4   | Implemented       | Revised private spec copy and public spec amendments use RunHarbor naming and paths.                                    |
+| 4   | Implemented       | Public spec amendments use RunHarbor naming and paths.                                    |
 | 5   | Implemented       | Spec adopts JS/http/native DOM/node:sqlite/scrypt; no TS migration scheduled.                                           |
 | 6   | Implemented       | Physical schema and flat layout documented; ordered migrations, legacy upgrade and rollback tests.                      |
 | 7   | Done              | Explicit M0 sequencing/alpha exception recorded; v1 gates retained.                                                     |

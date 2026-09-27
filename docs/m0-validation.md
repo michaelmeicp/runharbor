@@ -1,6 +1,6 @@
 # M0 verification — 2026-09-26
 
-M0 is **not passed**. Codex CLI 0.157.0 is installed and reports ChatGPT login. Claude CLI, Gemini CLI, and Docker are absent on this host. No provider credentials have been read, copied, or published. No billable model calls were made during these probes.
+M0 is **not passed**. This record covers synthetic macOS filesystem probes with Codex CLI 0.157.0. Claude, Gemini, and container validation remain unverified. No provider credentials were read and no model calls were made during these probes.
 
 ## Reproducible local evidence
 
@@ -16,13 +16,13 @@ The installed version uses `codex sandbox -P <profile> -C <cwd> -- <command>`. T
 | V-2  | Failed required boundary     | Outside-workspace canary reads succeed on macOS. Linux not yet verified.                             |
 | V-3  | Open                         | Malicious project config/rules fixture tests not yet run.                                            |
 | V-4  | Open                         | MCP override behavior not proven with installed CLI.                                                 |
-| V-5  | Blocked                      | Claude unavailable; actual linked-worktree ref probe needed.                                         |
+| V-5  | Blocked                      | Claude execution unverified; actual linked-worktree ref probe needed.                                         |
 | V-6  | Open                         | No live rate-limit fixture or comparison with CLI status.                                            |
-| V-7  | Blocked                      | Claude unavailable; bare defaults/permission-prompts cannot be claimed.                              |
-| V-8  | Open, v2                     | Gemini unavailable.                                                                                  |
+| V-7  | Blocked                      | Claude execution unverified; bare defaults/permission-prompts cannot be claimed.                              |
+| V-8  | Open, v2                     | Gemini execution unverified.                                                                                  |
 | V-9  | Open                         | 0.157.0 is observed, not a certified minimum or supported version range.                             |
 | V-10 | Open                         | Adversarial filter/diff/hook tests still needed for system git implementation.                       |
 | V-11 | External review required, v2 | No legal approval or provider-terms acceptance is inferred.                                          |
-| V-12 | Blocked                      | Claude unavailable; no actual overage event recording. Synthetic fixtures must be labeled synthetic. |
+| V-12 | Blocked                      | Claude execution unverified; no actual overage event recording. Synthetic fixtures must be labeled synthetic. |
 
 G4 requires real Codex and Claude task completion, output, and session continuation. None is claimed from the offline policy builder or the mock UI. Original one-week M0 comparison also remains outstanding.

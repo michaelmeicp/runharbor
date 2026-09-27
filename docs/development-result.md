@@ -12,7 +12,7 @@ This is an independently runnable **mock-only development workbench**, not the f
 - Human project memory, taint-aware context and search.
 - Local-folder delivery with per-output approval and hash verification.
 - Real desktop/mobile screenshots, English README, Traditional Chinese guide, contribution templates, security documentation and pinned CI.
-- Traceability for all 147 functional and 67 security requirement IDs, without publishing the private source brief.
+- Traceability for all 147 functional and 67 security requirement IDs, using public acceptance summaries.
 
 ## Verification performed locally
 
@@ -23,7 +23,7 @@ This is an independently runnable **mock-only development workbench**, not the f
 - npm dry-run package review: no data directory, environment files, databases, or logs.
 - Desktop screenshots visually inspected; mobile overflow corrected and checked in the browser.
 
-Local runtime observed during final testing: Node.js 26.7.0 on macOS arm64. CI is configured for Node.js 24 on macOS and Ubuntu; its actual results must be checked separately. Tests make no live model calls.
+CI targets Node.js 24 on macOS and Ubuntu. Tests use synthetic data and make no live model calls; platform results are linked below.
 
 ## GitHub and package verification
 
@@ -36,12 +36,12 @@ Local runtime observed during final testing: Node.js 26.7.0 on macOS arm64. CI i
 
 A fresh-directory installation from the npm tarball also passed setup, authenticated demo creation, and production of two mock artifacts. This is a package smoke test, not proof of the specification's clean-machine five-minute installation target.
 
-The product owner authorized a public mock-only preview after reviewing the working build and its limitations. During the initial private phase, the branch-protection API returned HTTP 403 due to the account plan; public-repository protections are configured separately during launch. No account plan or billing setting was changed. Signed npm/container distribution remains unfinished.
+The public release scope is a mock-only preview. Signed npm/container distribution remains unfinished.
 
 ## Material gaps
 
-The one-week M0 comparison has not been performed. Claude CLI is not installed locally. Real-agent execution, verified live quota/failback, safe git workspaces and merges, full sandbox/credential isolation, encrypted export/backups, complete deletion, RRULE, complete localization and signed distribution are unfinished.
+The one-week M0 comparison has not been performed. Claude live integration has not been verified. Real-agent execution, verified live quota/failback, safe git workspaces and merges, full sandbox/credential isolation, encrypted export/backups, complete deletion, RRULE, complete localization and signed distribution are unfinished.
 
-The full v1 scope is therefore **not delivered**. The 19-item v1 security gate remains blocked. Public publication is authorized only for the narrower, clearly labeled mock-only preview; no live-agent support or full-security-baseline acceptance is implied.
+The full v1 scope is therefore **not delivered**. The 19-item v1 security gate remains blocked. Publication covers only the narrower, clearly labeled mock-only preview; no live-agent support or full-security-baseline acceptance is implied.
 
 The repository includes a discovery plan, but no social posts, outreach, paid promotion, or star acquisition has been performed. No star-growth result is claimed.

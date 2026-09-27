@@ -8,3 +8,14 @@ coverage/
 test-results/
 .DS_Store
 .local/
+
+# Private source material and local authentication state
+requirements_final.md
+*requirements_final.md
+.codex/
+.claude/
+.runharbor/
+auth.json
+.credentials.json
+*.pem
+*.key

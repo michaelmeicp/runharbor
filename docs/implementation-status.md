@@ -14,9 +14,16 @@
 - Fixed Codex fallback selection to forward caller-supplied runtime cwd/schema to `tierToArgs`. Regression tests cover valid selection, unchanged source permissions, default schema, invalid/missing paths, and sandbox/provider rejection. Run metadata cannot supply trusted paths.
 - The mock engine still supplies no live runtime; real adapter execution and the v1 gate remain blocked.
 
+## Publication privacy (2026-09-27)
+
+- Removed unnecessary account and workstation descriptions from public documentation. Technical sandbox failures and release limitations remain visible.
+- Demo screenshots use a disposable mock workspace and a fixed UTC browser timezone. Usage capture waits for the correct page heading.
+- Publication checks reject private attachment/runtime files and personal home paths; Gitleaks remains the separate secret scanner. Images and public release metadata still require manual review.
+- These changes apply to the PR head. Previously published Git objects and release archives are not rewritten by this change.
+
 ## Requirement matrix
 
-This matrix preserves the supplied v2.0 requirement IDs without publishing the original private product brief. **No requirement is declared fully accepted by this development pass.** A partial implementation may satisfy individual acceptance cases while leaving other cases open.
+This matrix preserves the v2.0 requirement IDs and summarizes their implementation status. **No requirement is declared fully accepted by this development pass.** A partial implementation may satisfy individual acceptance cases while leaving other cases open.
 
 - **Partial / mock:** code or a deterministic test exists, but complete v1 acceptance is not established.
 - **Open:** not implemented, or requires live-platform evidence.
@@ -245,4 +252,4 @@ The original scope has 147 functional requirements and 67 security requirements.
 
 The current executable slice is the local mock workbench. It does not replace the requested v1 product. In particular, G4 (live Codex/Claude), G7 (signed installable public distribution), G8 (verified live quota), G9 (complete live switching/failback), and G10 (full sandbox baseline) remain unfulfilled.
 
-The product owner authorized public publication of the mock-only preview after reviewing its limitations. This scope exception does not change the outstanding v1 acceptance criteria.
+The public release scope is the mock-only preview with the limitations listed above. This scope exception does not change the outstanding v1 acceptance criteria.
