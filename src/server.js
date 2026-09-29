@@ -20,6 +20,9 @@ import { nextDates } from "./schedule.js";
 import { contextFor, tierToArgs } from "./policy.js";
 
 const web = resolve(dirname(fileURLToPath(import.meta.url)), "../web");
+const buildVersion = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+).version;
 const files = {
   "/": "index.html",
   "/app.js": "app.js",
@@ -280,7 +283,7 @@ export async function createApp({
             heartbeat: engine.heartbeat,
             active: engine.active.size,
             daily_run_limit: store.setting("daily_run_limit", 100),
-            build: "0.1.0-alpha.1",
+            build: buildVersion,
             execution: "mock-only",
             live_agents: "blocked_pending_M0",
             fde: "unknown",

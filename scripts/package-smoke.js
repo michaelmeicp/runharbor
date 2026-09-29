@@ -102,11 +102,11 @@ try {
   await Promise.all([...app.engine.work]);
   assert(app.store.all("runs").some((run) => run.status === "succeeded"));
   assert(app.store.all("artifacts").length > 0);
-  assert.equal(
-    (await fetch(app.origin + "/api/state", { headers: { Cookie: cookie } }))
-      .status,
-    200,
-  );
+  const state = await fetch(app.origin + "/api/state", {
+    headers: { Cookie: cookie },
+  });
+  assert.equal(state.status, 200);
+  assert.equal((await state.json()).status.build, packed.version);
   assert.equal(app.store.setting("schema_version"), 2);
   const help = execFileSync(
     process.execPath,
