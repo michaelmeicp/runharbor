@@ -47,7 +47,7 @@ node src/cli.js stop-all
 
 Use the same data directory for `stop-all` as the running service. After a hard crash, verify the old process is gone before removing a stale `service.lock`.
 
-**No npm-registry package or container image has been published.** A downloadable npm-format archive and SHA-256 checksums are available in the [GitHub prerelease](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.1). Do not assume an unscoped `npx runharbor` package belongs to this project. The source checkout above is the current install path.
+**No npm-registry package or container image has been published.** A downloadable npm-format archive and SHA-256 checksums are available in the [GitHub prerelease](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.2). Do not assume an unscoped `npx runharbor` package belongs to this project. The source checkout above is the current install path.
 
 ## What you can use today
 

@@ -1,6 +1,6 @@
 {
   "name": "@michaelmeicp/runharbor",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "A local workbench for scheduled agents. Results in one place. Only exceptions in your inbox.",
   "type": "module",
   "bin": {

@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-alpha.2 — verified mock-only preview
 
 - Transactional database migrations preserve existing data and verify migration history.
 - Proposed CLI policies bind trusted worktree/schema paths and enforce explicit permission denials; live execution remains disabled.
