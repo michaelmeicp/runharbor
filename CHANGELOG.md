@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Transactional database migrations preserve existing data and verify migration history.
+- Proposed CLI policies bind trusted worktree/schema paths and enforce explicit permission denials; live execution remains disabled.
+- Publication checks and synthetic screenshots avoid personal workstation details.
+- Release archives include NOTICE, the changelog and contribution guidance. CI installs the actual archive in a fresh directory and verifies authentication, web assets, mock output, migrations and CLI startup.
+
 ## 0.1.0-alpha.1 — mock-only public preview
 
 - Local password-protected workbench with projects, tasks, runs, and permanent outputs.

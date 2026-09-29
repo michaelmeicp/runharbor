@@ -21,6 +21,9 @@
     "docs",
     "README.md",
     "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
     "SECURITY.md"
   ],
   "scripts": {
@@ -29,6 +32,7 @@
     "check": "node scripts/check.js && npm run check:publication",
     "verify": "npm run check && npm test && npm audit --omit=dev --audit-level=high",
     "test:browser": "node scripts/browser-smoke.js",
+    "test:package": "node scripts/package-smoke.js",
     "check:publication": "node scripts/check-publication.js"
   },
   "dependencies": {
