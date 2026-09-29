@@ -34,4 +34,8 @@ Synthetic Codex/Claude event objects are not recordings. They cannot establish c
 
 ## Known limits
 
-The full 147 functional and 67 security requirements are not accepted. Tests do not cover real child-process isolation, cloud/provider behavior, 50,000-run performance, all crash points, complete deletion, migrations, backups, or every adversarial filesystem race. See the release checklist before drawing a production-readiness conclusion.
+The full 147 functional and 67 security requirements are not accepted. Tests do not cover real child-process isolation, cloud/provider behavior, 50,000-run performance, all crash points, complete deletion, encrypted backups, or every adversarial filesystem race. Database migration preservation and rollback have automated coverage. See the release checklist before drawing a production-readiness conclusion.
+
+## Downloaded-package verification
+
+`npm run test:package` creates the npm-format archive, checks its contents for private/runtime paths, installs it in a fresh temporary directory with production dependencies only, and checks web assets, authentication, first-run setup, mock demo output, migrations and the installed CLI. CI runs this on macOS and Linux. This verifies the mock-only distribution; it does not validate live agents or pass the v1 release gate.

@@ -1,3 +1,5 @@
+import { isAbsolute } from "node:path";
+import { fileURLToPath } from "node:url";
 import { insist, choice, number, sha } from "./security.js";
 
 export function permissions(input = {}, project = {}) {
@@ -73,7 +75,7 @@ export function params(input = {}) {
   return input;
 }
 /** Proposed argv only. Real execution is deliberately unavailable until M0 isolation passes. */
-export function tierToArgs(agent, policy, options = {}) {
+export function tierToArgs(agent, policy, options = {}, runtime = {}) {
   const p = permissions(policy),
     args = params(options);
   insist(
@@ -84,10 +86,31 @@ export function tierToArgs(agent, policy, options = {}) {
   );
   if (agent === "mock")
     return ["mock", `T${p.tier}`, "--scenario", "structured"];
-  if (agent === "codex")
+  if (agent === "codex") {
+    insist(
+      typeof runtime.worktree === "string" &&
+        isAbsolute(runtime.worktree) &&
+        !runtime.worktree.includes("\0"),
+      "Codex requires an absolute, trusted worktree path.",
+    );
+    const schema =
+      runtime.outputSchema ||
+      fileURLToPath(
+        new URL("../packages/adapter-sdk/output.schema.json", import.meta.url),
+      );
+    insist(
+      typeof schema === "string" &&
+        isAbsolute(schema) &&
+        !schema.includes("\0"),
+      "Codex requires an absolute output schema path.",
+    );
     return [
       "exec",
       "--json",
+      "-C",
+      runtime.worktree,
+      "--output-schema",
+      schema,
       "--ignore-user-config",
       "--ignore-rules",
       "--sandbox",
@@ -103,6 +126,7 @@ export function tierToArgs(agent, policy, options = {}) {
       ...(args.effort ? ["-c", `model_reasoning_effort="${args.effort}"`] : []),
       "-",
     ];
+  }
   insist(agent === "claude_code", "Unknown adapter.");
   return [
     "-p",
@@ -110,7 +134,7 @@ export function tierToArgs(agent, policy, options = {}) {
     "stream-json",
     "--verbose",
     "--setting-sources",
-    "",
+    "user",
     "--strict-mcp-config",
     "--mcp-config",
     '{"mcpServers":{}}',
@@ -123,7 +147,11 @@ export function tierToArgs(agent, policy, options = {}) {
         ? "Read,Grep,Glob,Edit,Write"
         : "Read,Grep,Glob,Edit,Write,Bash",
     "--disallowedTools",
-    "WebFetch,WebSearch",
+    p.tier === 0
+      ? "Bash,Edit,Write,WebFetch,WebSearch"
+      : p.tier === 1
+        ? "Bash,WebFetch,WebSearch"
+        : "WebFetch,WebSearch",
     "--settings",
     JSON.stringify({
       disableAllHooks: true,
@@ -189,6 +217,7 @@ export function selectProfile({
   quotas,
   clock = Date.now(),
   switches = 0,
+  runtime = {},
 }) {
   const blocked = quotaBlocked(
     quotas[source.id],
@@ -238,8 +267,10 @@ export function selectProfile({
     )
       continue;
     // Inherit the source policy. Target profile settings cannot widen it.
+    // Runtime paths come only from the trusted caller, never run/profile metadata.
+    // The mock-only engine supplies none; live callers must supply verified paths.
     try {
-      const argv = tierToArgs(target.agent_id, run, target.params);
+      const argv = tierToArgs(target.agent_id, run, target.params, runtime);
       return { profile: target, switched: true, argv, argv_hash: sha(argv) };
     } catch {
       continue;

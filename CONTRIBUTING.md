@@ -32,3 +32,10 @@ Requires separately reviewed evidence for version pinning, no repository hooks/M
 - Changes to permissions, workflows, dependencies, or publishing need maintainer review.
 
 Report vulnerabilities through the process in [SECURITY.md](SECURITY.md), not a public issue.
+
+## Publication privacy
+
+- Use disposable mock workspaces and UTC for screenshots. Inspect every image before committing; automated text checks cannot inspect pixels.
+- Keep source attachments, raw CLI transcripts, runtime databases, login state, and private reports outside the repository. Publish only sanitized technical evidence.
+- Review the actual npm archive, PR/release text, commit identity, and CI artifacts before publication. Use a GitHub noreply commit email.
+- `npm run check:publication` checks tracked file names and text for common private-file and home-path mistakes. It does not replace Gitleaks or human review and does not erase existing Git history.

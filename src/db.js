@@ -1,3 +1,4 @@
+import { migrate } from "./migrations.js";
 import { DatabaseSync } from "node:sqlite";
 import {
   mkdirSync,
@@ -50,22 +51,15 @@ export class Store {
       );
     this.db = new DatabaseSync(path);
     chmodSync(path, 0o600);
-    this.db
-      .exec(`PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA secure_delete=ON; PRAGMA busy_timeout=5000;
-      CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT NOT NULL);
-      CREATE TABLE IF NOT EXISTS entities(kind TEXT NOT NULL, id TEXT PRIMARY KEY, project_id TEXT, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, body TEXT NOT NULL CHECK(json_valid(body)));
-      CREATE INDEX IF NOT EXISTS entities_kind_time ON entities(kind, created_at DESC);
-      CREATE INDEX IF NOT EXISTS entities_project ON entities(project_id, kind);
-      CREATE UNIQUE INDEX IF NOT EXISTS schedule_occurrence ON entities(json_extract(body,'$.schedule_id'), json_extract(body,'$.scheduled_for'), json_extract(body,'$.attempt')) WHERE kind='runs' AND json_extract(body,'$.trigger') IN ('schedule','catch_up','retry');
-      CREATE TABLE IF NOT EXISTS events(seq INTEGER PRIMARY KEY AUTOINCREMENT, run_id TEXT NOT NULL, ts TEXT NOT NULL, type TEXT NOT NULL, payload TEXT NOT NULL);
-      CREATE INDEX IF NOT EXISTS events_run ON events(run_id,seq);
-      CREATE TABLE IF NOT EXISTS audit(seq INTEGER PRIMARY KEY AUTOINCREMENT, ts TEXT NOT NULL, type TEXT NOT NULL, payload TEXT NOT NULL, previous TEXT NOT NULL, hash TEXT NOT NULL);
-      CREATE VIRTUAL TABLE IF NOT EXISTS search USING fts5(id UNINDEXED, kind UNINDEXED, content, tokenize='trigram');
-      CREATE TRIGGER IF NOT EXISTS audit_no_update BEFORE UPDATE ON audit BEGIN SELECT RAISE(ABORT,'append-only'); END;
-      CREATE TRIGGER IF NOT EXISTS audit_no_delete BEFORE DELETE ON audit BEGIN SELECT RAISE(ABORT,'append-only'); END;`);
-    const version = this.setting("schema_version", 1);
-    insist(version === 1, "Database version is newer than this application.");
-    this.setting("schema_version", 1, true);
+    try {
+      migrate(this.db);
+      this.db.exec(
+        "PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON; PRAGMA secure_delete=ON; PRAGMA busy_timeout=5000;",
+      );
+    } catch (error) {
+      this.db.close();
+      throw error;
+    }
   }
   close() {
     this.db.close();

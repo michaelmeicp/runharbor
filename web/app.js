@@ -399,7 +399,7 @@ function render() {
         "Your work stays on this machine.",
       ),
       badge("DEVELOPMENT · MOCK ONLY"),
-      h("p", {}, "v0.1.0-alpha.1"),
+      h("p", {}, `v${state.status.build}`),
     ),
   );
   const top = h(

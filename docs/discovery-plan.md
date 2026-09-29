@@ -4,10 +4,10 @@ The goal is to earn attention through a useful, credible workflow. Star growth i
 
 ## Public preview launch
 
-- The product owner authorized the narrower mock-only preview after reviewing the original release-gate exception.
+- The public release scope is the narrower mock-only preview recorded in the release gate.
 - Keep the status limitation visible before installation instructions.
 - Use real screenshots and a reproducible zero-key demo.
-- Verify clean installs and CI. Enable private vulnerability reporting and appropriate repository protections where the account plan allows.
+- Verify clean installs and CI. Enable private vulnerability reporting and appropriate repository protections.
 - Use GitHub private vulnerability reporting for security disclosures. A separate private conduct contact and backup security email remain to be configured; do not invent either.
 
 ## Repository positioning

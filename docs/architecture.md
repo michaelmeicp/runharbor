@@ -32,6 +32,10 @@ flowchart LR
 | `web/`                  | Dependency-free browser UI; all untrusted text uses DOM text nodes                                |
 | `packages/adapter-sdk/` | Draft TypeScript adapter contract; dynamic plugin loading is not implemented                      |
 
+## Schema and specification
+
+See [spec amendments](spec-amendments.md). `src/migrations.js` upgrades the legacy schema transactionally and records checksums. An unknown version or changed migration history aborts startup. Back up the stopped data directory before upgrading; automatic encrypted backups are not implemented.
+
 ## Important choices
 
 - Node.js 24.13+ and its built-in SQLite module avoid an application build step and native addon installation. Node SQLite's stability level depends on the Node version; test the pinned supported runtime before release.

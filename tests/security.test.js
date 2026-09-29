@@ -135,7 +135,12 @@ test("free parameters cannot inject shell or permission flags", () => {
 test("argv generation is centralized and never permits unverified T3", () => {
   for (const agent of ["mock", "codex", "claude_code"])
     for (const tier of [0, 1, 2]) {
-      const argv = tierToArgs(agent, { tier });
+      const argv = tierToArgs(
+        agent,
+        { tier },
+        {},
+        { worktree: "/tmp/trusted workspace" },
+      );
       assert(!argv.some((a) => /dangerously|yolo|full-auto/.test(a)));
       if (agent === "claude_code") assert(argv.includes("--verbose"));
     }
@@ -191,6 +196,92 @@ test("failover preserves source permissions and rejects unapproved providers, pa
   assert.equal(selection({ policy: { enabled: false } }).profile, null);
   assert.equal(selection({ run: { tier: 2, pin_agent: true } }).profile, null);
   assert.equal(selection({ switches: 3 }).storm, true);
+});
+const codexSelection = (overrides = {}) =>
+  selection({
+    candidates: [
+      {
+        ...target,
+        agent_id: "codex",
+        provider: "openai",
+        auth_mode: "subscription",
+      },
+    ],
+    project: { allowed_providers: ["openai:subscription"] },
+    ...overrides,
+  });
+test("Codex fallback forwards trusted runtime cwd/schema and preserves the source tier", () => {
+  const runtime = {
+    worktree: "/tmp/trusted workspace $literal",
+    outputSchema: "/tmp/trusted schema.json",
+  };
+  const result = codexSelection({
+    runtime,
+    run: {
+      tier: 0,
+      capabilities: [],
+      network_allowlist: [],
+      workspace_mode: "artifact_only",
+    },
+  });
+  assert.equal(result.profile?.id, target.id);
+  assert.equal(result.switched, true);
+  assert.equal(result.argv[result.argv.indexOf("-C") + 1], runtime.worktree);
+  assert.equal(
+    result.argv[result.argv.indexOf("--output-schema") + 1],
+    runtime.outputSchema,
+  );
+  assert.equal(result.argv[result.argv.indexOf("--sandbox") + 1], "read-only");
+  assert.equal(result.argv_hash, sha(result.argv));
+  const defaults = codexSelection({ runtime: { worktree: runtime.worktree } });
+  assert(
+    defaults.argv[defaults.argv.indexOf("--output-schema") + 1].endsWith(
+      "/packages/adapter-sdk/output.schema.json",
+    ),
+  );
+});
+test("Codex fallback fails closed without valid runtime and cannot take paths from run metadata", () => {
+  for (const runtime of [
+    undefined,
+    {},
+    { worktree: "relative" },
+    { worktree: "/tmp/bad\0path" },
+    { worktree: "/tmp/trusted", outputSchema: "relative.json" },
+  ]) {
+    const result = codexSelection({
+      runtime,
+      run: {
+        tier: 0,
+        workspace_mode: "artifact_only",
+        workspace: "/tmp/untrusted",
+        worktree: "/tmp/untrusted",
+      },
+    });
+    assert.equal(result.profile, null);
+  }
+});
+test("trusted runtime cannot bypass sandbox verification or provider approval", () => {
+  const runtime = { worktree: "/tmp/trusted" };
+  assert.equal(
+    codexSelection({
+      runtime,
+      candidates: [
+        {
+          ...target,
+          agent_id: "codex",
+          provider: "openai",
+          auth_mode: "subscription",
+          sandbox_verified: false,
+        },
+      ],
+    }).profile,
+    null,
+  );
+  assert.equal(
+    codexSelection({ runtime, project: { allowed_providers: ["local:mock"] } })
+      .profile,
+    null,
+  );
 });
 test("unknown, estimated and anomalous quota signals cannot drive switching", () => {
   for (const q of [
@@ -312,5 +403,29 @@ test("two-character CJK search and persisted redaction", () => {
   } finally {
     s.close();
     rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("Codex binds cwd/schema and Claude explicitly denies T0/T1 mutations", () => {
+  assert.throws(() => tierToArgs("codex", { tier: 0 }), /worktree/);
+  const argv = tierToArgs(
+    "codex",
+    { tier: 0 },
+    {},
+    { worktree: "/tmp/space and $literal", outputSchema: "/tmp/schema.json" },
+  );
+  assert.equal(argv[argv.indexOf("-C") + 1], "/tmp/space and $literal");
+  assert.equal(argv[argv.indexOf("--output-schema") + 1], "/tmp/schema.json");
+  for (const tier of [0, 1, 2]) {
+    const a = tierToArgs("claude_code", { tier });
+    const denied = a[a.indexOf("--disallowedTools") + 1].split(",");
+    assert.equal(a[a.indexOf("--setting-sources") + 1], "user");
+    if (tier === 0)
+      for (const tool of ["Bash", "Edit", "Write"])
+        assert(denied.includes(tool));
+    if (tier === 1) assert(denied.includes("Bash"));
+    assert(denied.includes("WebFetch"));
+    const settings = JSON.parse(a[a.indexOf("--settings") + 1]);
+    assert(settings.disableAllHooks && settings.sandbox.failIfUnavailable);
   }
 });
