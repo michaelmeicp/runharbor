@@ -4,13 +4,15 @@
 
 [English](README.md) · [實作狀態](docs/implementation-status.md) · [v1 發佈閘門](docs/release-gate.md)
 
-> **安全與狀態：目前是僅支援 Mock Agent 的開發預覽，尚未完成 v1。** 僅監聽 `127.0.0.1`，必須設定密碼。不會啟動 Codex／Claude、不讀取廠商憑證、不呼叫模型。真實代理須待 M0 相容性與沙箱測試通過後才可啟用。本專案不隸屬任何模型廠商，不提供、轉售或中介模型用量；訂閱自動化須先自行確認廠商現行條款。
+> **安全與狀態：早期 alpha（v0.1.0-alpha.2），僅 Mock。** 僅監聽 `127.0.0.1`，必須設定密碼。不會用 Codex、Claude 或其他代理執行工作，不讀取廠商憑證，不呼叫模型。示範結果都來自腳本化 Mock Agent，並標示為 Mock。真實代理執行尚未提供；[v1 發佈閘門](docs/release-gate.md)為 **BLOCKED**。請用它試工作流程，不要用它跑真正的代理工作。本專案不隸屬任何模型廠商，不提供、轉售或中介模型用量；若將來做訂閱自動化，須先自行確認廠商現行條款。
 
 ![RunHarbor 收件匣：模擬輸入請求、執行紀錄、未知的真實額度](docs/images/inbox-desktop.png)
 
 ## 為什麼做這個
 
-每天、每週重複的代理工作，不應讓聊天清單越來越亂。
+聊天式代理工具適合單次對話。同時跑多個代理、又加上排程時，歷史會變亂：成功的執行把失敗、或需要你回答的那一次埋住。
+
+RunHarbor 把要做的事收成專案、任務與排程。每次排程執行的紀錄留在該排程底下，收件匣只放例外。
 
 - **專案／任務／排程**管理要做的事。
 - **Run／三行摘要／成果**保存每次做了什麼。
@@ -40,7 +42,9 @@ node src/cli.js doctor
 node src/cli.js stop-all
 ```
 
-急停指令必須使用與服務相同的資料目錄。目前**未發佈 npm registry 套件或容器映像**；[GitHub 預覽版本](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.2)提供可下載套件與 SHA-256 校驗檔，請用上述原始碼安裝方式；不要把其他同名套件當成本專案。
+`doctor` 只會查本機環境。若 `PATH` 上有 `codex` 或 `claude`，它只執行 `--version`，不會開始任務、不讀取憑證、不呼叫模型。回報的執行模式是 `mock-only`。
+
+急停指令必須使用與服務相同的資料目錄。目前**未發佈 npm registry 套件或容器映像**。套件名稱是 `@michaelmeicp/runharbor`。[v0.1.0-alpha.2 預覽版本](https://github.com/michaelmeicp/runharbor/releases/tag/v0.1.0-alpha.2)附有 `michaelmeicp-runharbor-0.1.0-alpha.2.tgz` 與 `SHA256SUMS`，沒有簽章或證明檔。請用上述原始碼安裝方式；不要把未加 scope 的 `npx runharbor` 當成本專案。
 
 ## 已可體驗
 
@@ -57,9 +61,9 @@ node src/cli.js stop-all
 
 ## 尚未完成
 
-真實 Codex／Claude 執行、即時額度來源、macOS／Linux 沙箱驗證、金鑰庫、git worktree／審核合併、RRULE、完整切回與斷路器、加密備份與匯出、永久刪除、外掛載入、npm／Docker 簽章發佈等。
+真實 Codex／Claude 執行尚未提供。介面中的 Codex／Claude 設定檔預設關閉，此版本拒絕執行非 Mock 的代理。另有：即時額度來源、macOS／Linux 沙箱驗證、金鑰庫、git worktree／審核合併、RRULE、完整切回與斷路器、加密備份與匯出、永久刪除、外掛載入、已簽章的 npm／容器發佈、七日 M0 替代方案比較，以及已核對的真實 CLI 紀錄。
 
-[狀態矩陣](docs/implementation-status.md) 保留所有需求編號；[M0 紀錄](docs/M0-verification.md) 區分已觀測與待驗證內容。測試通過不代表 19 項發佈安全基線已完成。
+[狀態矩陣](docs/implementation-status.md) 保留所有需求編號；[M0 紀錄](docs/M0-verification.md) 區分已觀測與待驗證內容。測試通過不是完成百分比，也不代表 19 項 v1 基線已通過。閘門狀態是 **BLOCKED**。
 
 ## 開發驗證
 
